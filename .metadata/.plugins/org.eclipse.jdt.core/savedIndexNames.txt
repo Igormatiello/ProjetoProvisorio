@@ -1,0 +1,1 @@
+INDEX VERSION 1.131+C:\Users\Igor\Desktop\curso-udemy\minhasfinancas\.metadata\.plugins\org.eclipse.jdt.core
