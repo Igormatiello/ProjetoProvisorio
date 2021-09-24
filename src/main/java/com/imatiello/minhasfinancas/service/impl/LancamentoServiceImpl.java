@@ -3,6 +3,7 @@ package com.imatiello.minhasfinancas.service.impl;
 import java.math.BigDecimal;
 import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
 
 import org.springframework.data.domain.Example;
 import org.springframework.data.domain.ExampleMatcher;
@@ -14,6 +15,7 @@ import com.imatiello.minhasfinancas.exception.RegraNegocioException;
 import com.imatiello.minhasfinancas.model.entity.Lancamento;
 import com.imatiello.minhasfinancas.model.entity.Usuario;
 import com.imatiello.minhasfinancas.model.enums.StatusLancamento;
+import com.imatiello.minhasfinancas.model.enums.TipoLancamento;
 import com.imatiello.minhasfinancas.model.repository.LancamentoRepository;
 import com.imatiello.minhasfinancas.service.LancamentoService;
 
@@ -37,8 +39,8 @@ public class LancamentoServiceImpl implements LancamentoService{
 	public Lancamento salvar(Lancamento lancamento) {
 		
 		validar(lancamento);
-		
-		return repository.save(repository);
+		lancamento.setStatus(StatusLancamento.PENDENTE);
+		return repository.save(lancamento);
 	}
 	
 	
@@ -50,9 +52,10 @@ public class LancamentoServiceImpl implements LancamentoService{
 	public Lancamento atualizar(Lancamento lancamento) {
 	
 		Objects.requireNonNull(lancamento.getId());
-		validar(lancamento);
+		
 		lancamento.setStatus(StatusLancamento.PENDENTE);
-		return repository.save(repository);
+		validar(lancamento);
+		return repository.save(lancamento);
 	}
 
 	
@@ -125,6 +128,36 @@ public class LancamentoServiceImpl implements LancamentoService{
 		if (lancamento.getTipo() == null) {
 			throw new RegraNegocioException("Informe um Tipo de Lançamento.");
 		}
+	}
+
+
+
+	@Override
+	public Optional<Lancamento> obterPorId(Long id) {
+		return Optional.empty(); //TODO mudança no original
+	}
+
+
+
+	@Override
+	@Transactional(readOnly = true)
+	public BigDecimal obterSaldoPorUsuario(Long id) {
+	
+		BigDecimal receitas = repository.obterSaldoPorTipoLancamentoEUsuario
+				(id, TipoLancamento.RECEITA);
+		
+		BigDecimal despesas = repository.obterSaldoPorTipoLancamentoEUsuario
+				(id, TipoLancamento.DESPESA);
+		
+		if (receitas==null) {
+			receitas=BigDecimal.ZERO;
+		}
+		if (despesas==null) {
+			
+			despesas=BigDecimal.ZERO;
+		}
+		
+		return receitas.subtract(despesas);
 	}
 	
 

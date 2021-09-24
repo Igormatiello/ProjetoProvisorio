@@ -53,7 +53,7 @@ public class UsuarioServiceTeste {
 		Assertions.assertThat(usuarioSalvo).isNotNull();
 		Assertions.assertThat(usuarioSalvo.getId()).isEqualTo(1l);
 		Assertions.assertThat(usuarioSalvo.getNome()).isEqualTo("nome");
-		Assertions.assertThat(usuarioSalvo.getEmail()).isEqualTo("email@email.com");
+		Assertions.assertThat(usuarioSalvo.getEmail()).isEqualTo("email@email.com");// TODO problemas
 		Assertions.assertThat(usuarioSalvo.getSenha()).isEqualTo("senha");
 	}
 	
