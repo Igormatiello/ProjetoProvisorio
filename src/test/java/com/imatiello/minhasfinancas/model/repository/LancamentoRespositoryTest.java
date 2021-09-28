@@ -71,7 +71,7 @@ public class LancamentoRespositoryTest {
 		lancamento=	entityManager.find(Lancamento.class, lancamento.getId());
 		
 		
-		repository.delete(lancamento);
+	
 	
 	Lancamento lancamentoInexistente = entityManager.find(Lancamento.class, lancamento.getId());
 	Assertions.assertThat(lancamentoInexistente.getId()).isNull();
