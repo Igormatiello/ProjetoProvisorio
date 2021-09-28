@@ -17,7 +17,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 import com.imatiello.minhasfinancas.model.entity.Usuario;
 
-@RunWith(SpringRunner.class)
+@ExtendWith(SpringExtension.class)
 @ActiveProfiles("test")
 @DataJpaTest //desfaz o teste após finalizar
 @AutoConfigureTestDatabase(replace = Replace.NONE)  //não sobreescrever configurações
